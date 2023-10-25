@@ -32,18 +32,20 @@ export default function Repository({
         {stargazers_count && (
           <div className="flex items-center mr-4 gap-1">
             <GoStar className="inline" />
-            <span>{stargazers_count}</span>
+            <span aria-label="stars count">{stargazers_count}</span>
           </div>
         )}
         {forks_count && (
           <div className="flex items-center mr-4 gap-1">
             <GoRepoForked className="inline" />
-            <span>{forks_count}</span>
+            <span aria-label="forks count">{forks_count}</span>
           </div>
         )}
         {updated_at && (
           <div className="flex items-center mr-4 gap-1">
-            <span>Updated on {getDateFromString(updated_at)}</span>
+            <span aria-label="updated on">
+              Updated on {getDateFromString(updated_at)}
+            </span>
           </div>
         )}
       </div>
