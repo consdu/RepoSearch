@@ -29,19 +29,19 @@ export interface GithubUserStructure {
   type: string;
   site_admin: boolean;
   name: string;
-  company: null;
-  blog: string;
-  location: string;
-  email: null;
-  hireable: null;
-  bio: string;
-  twitter_username: null;
+  company: null | string;
+  blog: null | string;
+  location: null | string;
+  email: null | string;
+  hireable: null | boolean;
+  bio: null | string;
+  twitter_username: null | string;
   public_repos: number;
   public_gists: number;
   followers: number;
   following: number;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface RepositoryStructure {
@@ -52,7 +52,7 @@ export interface RepositoryStructure {
   private: boolean;
   owner: RepositoryOwnerStructure;
   html_url: string;
-  description: string;
+  description: string | null;
   fork: boolean;
   url: string;
   forks_url: string;
@@ -91,18 +91,18 @@ export interface RepositoryStructure {
   labels_url: string;
   releases_url: string;
   deployments_url: string;
-  created_at: Date;
-  updated_at: Date;
-  pushed_at: Date;
+  created_at: string;
+  updated_at: string;
+  pushed_at: string;
   git_url: string;
   ssh_url: string;
   clone_url: string;
   svn_url: string;
-  homepage: string;
+  homepage: string | null;
   size: number;
   stargazers_count: number;
   watchers_count: number;
-  language: null;
+  language: null | string | string[];
   has_issues: boolean;
   has_projects: boolean;
   has_downloads: boolean;
@@ -114,7 +114,13 @@ export interface RepositoryStructure {
   archived: boolean;
   disabled: boolean;
   open_issues_count: number;
-  license: null;
+  license: null | {
+    key: string | null;
+    name: string | null;
+    spdx_id: string | null;
+    url: string | null;
+    node_id: string | null;
+  };
   allow_forking: boolean;
   is_template: boolean;
   web_commit_signoff_required: boolean;

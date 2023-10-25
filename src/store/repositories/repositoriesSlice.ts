@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RepositoriesStoreStructure } from "../../types";
+import { repositoriesStoreMock } from "../../mocks/repositoriesStoreMock";
 
-const initialRepositoriesState = {} as RepositoriesStoreStructure;
+const initialRepositoriesState =
+  repositoriesStoreMock as RepositoriesStoreStructure;
 
 const repositoriesSlice = createSlice({
   name: "repositories",
