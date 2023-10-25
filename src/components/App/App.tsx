@@ -1,5 +1,5 @@
-import BrandLogo from "./BrandLogo/BrandLogo";
+import Header from "../Header/Header";
 
 export default function App(): React.ReactElement {
-  return <BrandLogo />;
+  return <Header />;
 }
