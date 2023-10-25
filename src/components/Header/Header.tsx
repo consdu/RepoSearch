@@ -1,8 +1,8 @@
-import BrandLogo from "../App/BrandLogo/BrandLogo";
+import BrandLogo from "../BrandLogo/BrandLogo";
 
-export default function Header() {
+export default function Header(): React.ReactElement {
   return (
-    <header className="custom-container my-10">
+    <header className="py-10">
       <BrandLogo />
     </header>
   );
