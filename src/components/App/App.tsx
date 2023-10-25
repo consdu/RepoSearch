@@ -1,3 +1,3 @@
 export default function App(): React.ReactElement {
-  return <div>RepoSearch</div>;
+  return <div className=" bg-primary-500 text-white">RepoSearch</div>;
 }
