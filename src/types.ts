@@ -102,7 +102,7 @@ export interface RepositoryStructure {
   size: number;
   stargazers_count: number;
   watchers_count: number;
-  language: null | string | string[];
+  language: null | string;
   has_issues: boolean;
   has_projects: boolean;
   has_downloads: boolean;
