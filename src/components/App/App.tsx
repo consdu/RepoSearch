@@ -50,7 +50,7 @@ export default function App(): React.ReactElement {
       if (user) {
         setIsLoading(true);
 
-        const data = await getRepositoriesBySearchTerm(searchTerm, user.login);
+        const data = await getRepositoriesBySearchTerm(user.login, searchTerm);
 
         setIsLoading(false);
 

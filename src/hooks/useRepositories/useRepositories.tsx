@@ -27,8 +27,8 @@ export default function useRepositories() {
 
   const getRepositoriesBySearchTerm = useCallback(
     async (
-      searchTerm: string,
       username: string,
+      searchTerm: string,
     ): Promise<RepositoryStructure[] | undefined> => {
       try {
         const response = await fetch(
