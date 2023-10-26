@@ -11,7 +11,7 @@ export default function App(): React.ReactElement {
       <main>
         <section className="flex flex-col md:flex-row">
           <UserDetails user={repositoriesStoreMock.user} />
-          <div className="flex-1 md:pl-20">
+          <div className="flex-1 pt-10 md:pl-20 md:pt-0">
             <SearchBar />
             <RepositoriesList
               repositories={repositoriesStoreMock.repositories}

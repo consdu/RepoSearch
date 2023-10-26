@@ -24,7 +24,7 @@ export default function SearchBar(): React.ReactElement {
           value={search}
           onChange={handleSearchChange}
           placeholder="Find a repository..."
-          className="w-full rounded-md border border-gray-400 px-4 py-2 pl-10 outline-none outline-offset-0 transition-all focus:border-transparent focus:outline-primary-500"
+          className="w-full rounded-md border border-gray-400 px-4 py-2 pl-9 outline-none outline-offset-0 transition-all focus:border-transparent focus:outline-primary-500"
         />
       </div>
     </form>

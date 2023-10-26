@@ -20,7 +20,7 @@ export default function Repository({
     <article className="h-fit flex-1 py-6">
       <h2 className="text-2xl">{repository.name}</h2>
       <p className="mt-2 text-gray-400">{description}</p>
-      <div className="mt-4 flex text-sm text-gray-400">
+      <div className="mt-4 flex flex-wrap gap-y-2 text-sm text-gray-400">
         {language && (
           <div className="mr-4 flex items-center gap-2">
             <span
