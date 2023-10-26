@@ -1,8 +1,7 @@
 import { useCallback } from "react";
 import { RepositoryStructure } from "../../types";
 import { toast } from "sonner";
-
-const apiUrl = "https://api.github.com/users";
+import { apiUrl } from "../../utils/constants";
 
 export default function useRepositories() {
   const getRepositories = useCallback(
