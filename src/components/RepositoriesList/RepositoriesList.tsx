@@ -9,7 +9,7 @@ export default function RepositoriesList({
   repositories,
 }: RepositoriesListProps): React.ReactElement {
   return (
-    <ul className="py-20">
+    <ul className="pb-20 pt-10">
       {repositories.map((repository) => (
         <li
           key={repository.id}
