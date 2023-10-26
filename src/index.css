@@ -48,5 +48,5 @@ html {
 }
 
 body {
-  @apply overflow-y-scroll;
+  @apply min-h-[calc(100vh+148px)] overflow-y-scroll;
 }
