@@ -16,9 +16,27 @@ const repositoriesSlice = createSlice({
       ...currentRepositoriesState,
       repositories: action.payload,
     }),
+    loadSearchedRepositories: (
+      currentRepositoriesState: RepositoriesStoreStructure,
+      action: PayloadAction<RepositoryStructure[]>,
+    ) => ({
+      ...currentRepositoriesState,
+      repositoriesBySearchTerm: action.payload,
+    }),
+    loadSearchTerm: (
+      currentRepositoriesState: RepositoriesStoreStructure,
+      action: PayloadAction<string>,
+    ) => ({
+      ...currentRepositoriesState,
+      searchTerm: action.payload,
+    }),
   },
 });
 
-export const { loadRepositories: loadRepositoriesActionCreator } =
-  repositoriesSlice.actions;
+export const {
+  loadRepositories: loadRepositoriesActionCreator,
+  loadSearchedRepositories: loadSearchedRepositoriesActionCreator,
+  loadSearchTerm: loadSearchTermActionCreator,
+} = repositoriesSlice.actions;
+
 export const repositoriesReducer = repositoriesSlice.reducer;
