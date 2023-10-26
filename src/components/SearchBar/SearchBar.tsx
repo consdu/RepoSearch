@@ -1,12 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GoSearch } from "react-icons/go";
 
-export default function SearchBar(): React.ReactElement {
+interface SearchBarProps {
+  onSearchChange: (searchTerm: string) => void;
+}
+
+export default function SearchBar({
+  onSearchChange,
+}: SearchBarProps): React.ReactElement {
   const [search, setSearch] = useState("");
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
+
+  useEffect(() => {
+    onSearchChange(search);
+  }, [search, onSearchChange]);
 
   return (
     <form>

@@ -11,3 +11,7 @@
 html {
   @apply bg-gradient-to-b from-white to-primary-100;
 }
+
+body {
+  @apply overflow-y-scroll;
+}
