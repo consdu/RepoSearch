@@ -21,21 +21,21 @@ export default function UserDetails({
       <span className="block text-2xl font-extrabold">{name}</span>
       <span className="block text-xl text-gray-400">{login}</span>
       {bio && <p className="mt-4">{bio}</p>}
-      <div className="text-sm text-gray-400 flex items-center mt-2">
-        <GoPeople className="inline text-base mr-2" />
+      <div className="mt-2 flex items-center text-sm text-gray-400">
+        <GoPeople className="mr-2 inline text-base" />
         <p className="mr-2">
-          <span className="font-bold text-black mr-1">{followers}</span>
+          <span className="mr-1 font-bold text-black">{followers}</span>
           followers
         </p>
         <span className="text-black">•</span>
         <p className="mx-2">
-          <span className="font-bold text-black mr-1">{following}</span>
+          <span className="mr-1 font-bold text-black">{following}</span>
           following
         </p>
       </div>
       {company && (
-        <div className="text-gray-400 text-sm mt-2">
-          <GoOrganization className="inline mr-2 text-base" />
+        <div className="mt-2 text-sm text-gray-400">
+          <GoOrganization className="mr-2 inline text-base" />
           <span className="text-black">{company}</span>
         </div>
       )}

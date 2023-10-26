@@ -13,7 +13,7 @@ export default function RepositoriesList({
       {repositories.map((repository) => (
         <li
           key={repository.id}
-          className="border-b border-gray-200 last:border-b first:border-t first:border-gray-200  last:border-gray-200"
+          className="border-b border-gray-200 first:border-t first:border-gray-200 last:border-b  last:border-gray-200"
         >
           <Repository repository={repository} />
         </li>
