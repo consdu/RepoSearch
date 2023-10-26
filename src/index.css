@@ -8,6 +8,6 @@
   }
 }
 
-body {
-  @apply bg-gradient-to-b from-white to-primary-100 h-screen;
+html {
+  @apply bg-gradient-to-b from-white to-primary-100;
 }

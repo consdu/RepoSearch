@@ -17,14 +17,15 @@ export default function Repository({
   const languageColor = useMemo(() => getColorByLanguage(language), [language]);
 
   return (
-    <article className="flex-1 h-fit py-6 border-y border-gray-400">
+    <article className="flex-1 h-fit py-6">
       <h2 className="text-2xl">{repository.name}</h2>
       <p className="mt-2 text-gray-400">{description}</p>
       <div className="mt-4 flex text-gray-400 text-sm">
         {language && (
           <div className="flex items-center gap-2 mr-4">
             <span
-              className={`w-[16px] h-[16px] rounded-full block bg-[${languageColor}]`}
+              style={{ backgroundColor: languageColor as string }}
+              className={"w-[16px] h-[16px] rounded-full block"}
             ></span>
             <span className="inline-block">{language}</span>
           </div>
