@@ -24,7 +24,8 @@ export default function Repository({
         {language && (
           <div className="flex items-center gap-2 mr-4">
             <span
-              className={`w-[16px] h-[16px] rounded-full block bg-[${languageColor}]`}
+              style={{ backgroundColor: languageColor as string }}
+              className={"w-[16px] h-[16px] rounded-full block"}
             ></span>
             <span className="inline-block">{language}</span>
           </div>
