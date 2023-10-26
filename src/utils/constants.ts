@@ -2500,3 +2500,5 @@ export const githubLanguagesColors = {
     url: "https://github.com/trending?l=Zimpl",
   },
 };
+
+export const apiUrl = "https://api.github.com/users";

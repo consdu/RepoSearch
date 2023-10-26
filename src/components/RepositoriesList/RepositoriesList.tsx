@@ -10,14 +10,15 @@ export default function RepositoriesList({
 }: RepositoriesListProps): React.ReactElement {
   return (
     <ul className="pb-20 pt-10">
-      {repositories.map((repository) => (
-        <li
-          key={repository.id}
-          className="border-b border-gray-200 first:border-t first:border-gray-200 last:border-b  last:border-gray-200"
-        >
-          <Repository repository={repository} />
-        </li>
-      ))}
+      {repositories &&
+        repositories.map((repository) => (
+          <li
+            key={repository.id}
+            className="border-b border-gray-200 first:border-t first:border-gray-200 last:border-b  last:border-gray-200"
+          >
+            <Repository repository={repository} />
+          </li>
+        ))}
     </ul>
   );
 }
