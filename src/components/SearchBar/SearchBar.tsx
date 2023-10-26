@@ -19,6 +19,7 @@ export default function SearchBar(): React.ReactElement {
           <GoSearch className="text-gray-400" />
         </label>
         <input
+          id="searchbar"
           type="text"
           role="search"
           value={search}
