@@ -17,7 +17,7 @@ export default function Repository({
   const languageColor = useMemo(() => getColorByLanguage(language), [language]);
 
   return (
-    <article className="flex-1 h-fit py-6 border-y border-gray-400">
+    <article className="flex-1 h-fit py-6">
       <h2 className="text-2xl">{repository.name}</h2>
       <p className="mt-2 text-gray-400">{description}</p>
       <div className="mt-4 flex text-gray-400 text-sm">
