@@ -13,6 +13,7 @@ import {
   loadSearchedRepositoriesActionCreator,
 } from "../../store/repositories/repositoriesSlice";
 import { RepositoryStructure } from "../../types";
+import Loader from "../Loader/Loader";
 
 export default function App(): React.ReactElement {
   const [isLoading, setIsLoading] = useState(false);
@@ -73,9 +74,7 @@ export default function App(): React.ReactElement {
           <UserDetails user={user} />
           <div className=" flex-1 pt-10 md:pl-20 md:pt-0">
             <SearchBar onSearchChange={onSearchChange} />
-            {isLoading && !repositoriesBySearchTerm.length && (
-              <p className="mt-40 text-center text-base">Loading...</p>
-            )}
+            {isLoading && !repositoriesBySearchTerm.length && <Loader />}
             <RepositoriesList
               repositories={
                 searchTerm && repositoriesBySearchTerm
