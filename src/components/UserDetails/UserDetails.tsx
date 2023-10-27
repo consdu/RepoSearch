@@ -18,9 +18,9 @@ export default function UserDetails({
         height={296}
         className="rounded-full"
       />
-      <span className="block text-2xl font-extrabold">{name}</span>
+      <span className="mt-4 block text-2xl font-extrabold">{name}</span>
       <span className="block text-xl text-gray-400">{login}</span>
-      {bio && <p className="mt-4">{bio}</p>}
+      {bio && <p className="mt-4 max-w-[296px]">{bio}</p>}
       <div className="mt-2 flex items-center text-sm text-gray-400">
         <GoPeople className="mr-2 inline text-base" />
         <p className="mr-2">

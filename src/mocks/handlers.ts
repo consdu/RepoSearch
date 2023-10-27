@@ -4,6 +4,7 @@ import { apiUrl } from "../utils/constants";
 
 const repositories = repositoriesStoreMock.repositories;
 const searchedRepositories = repositoriesStoreMock.repositories.slice(0, 3);
+const user = repositoriesStoreMock.user;
 
 export const handlers = [
   http.get(`${apiUrl}/users/testuser/repos`, () => {
@@ -12,6 +13,10 @@ export const handlers = [
 
   http.get(`${apiUrl}/search/repositories`, () => {
     return HttpResponse.json({ items: searchedRepositories });
+  }),
+
+  http.get(`${apiUrl}/users/gaearon`, () => {
+    return HttpResponse.json(user);
   }),
 ];
 
@@ -22,5 +27,9 @@ export const errorHandlers = [
 
   http.get(`${apiUrl}/search/repositories`, () => {
     return HttpResponse.json({ items: [] });
+  }),
+
+  http.get(`${apiUrl}/users/nonexistinguser`, () => {
+    return HttpResponse.error();
   }),
 ];

@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { RepositoryStructure } from "../../types";
+import { GithubUserStructure, RepositoryStructure } from "../../types";
 import { toast } from "sonner";
 import { apiUrl } from "../../utils/constants";
 
@@ -62,5 +62,23 @@ export default function useRepositories() {
     [],
   );
 
-  return { getRepositories, getRepositoriesBySearchTerm };
+  const getUser = async (
+    username: string,
+  ): Promise<GithubUserStructure | undefined> => {
+    try {
+      const response = await fetch(`${apiUrl}/users/${username}`);
+
+      if (!response.ok) {
+        throw new Error();
+      }
+
+      const data = (await response.json()) as GithubUserStructure;
+
+      return data;
+    } catch {
+      toast.error("Error loading user");
+    }
+  };
+
+  return { getRepositories, getRepositoriesBySearchTerm, getUser };
 }

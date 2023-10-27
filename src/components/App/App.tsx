@@ -9,7 +9,7 @@ import UserDetails from "../UserDetails/UserDetails";
 import useRepositories from "../../hooks/useRepositories/useRepositories";
 import {
   loadRepositoriesActionCreator,
-  loadSearchTermActionCreator,
+  setSearchTermActionCreator,
   loadSearchedRepositoriesActionCreator,
 } from "../../store/repositories/repositoriesSlice";
 import { RepositoryStructure } from "../../types";
@@ -46,7 +46,7 @@ export default function App(): React.ReactElement {
 
   const onSearchChange = useMemo(() => {
     return _debounce(async (searchTerm: string) => {
-      dispatch(loadSearchTermActionCreator(searchTerm));
+      dispatch(setSearchTermActionCreator(searchTerm));
 
       if (searchTerm === "") {
         dispatch(loadSearchedRepositoriesActionCreator([]));
@@ -71,7 +71,7 @@ export default function App(): React.ReactElement {
             ),
           );
       }
-    }, 250);
+    }, 300);
   }, [dispatch, getRepositoriesBySearchTerm, user, searchMethod]);
 
   return (
