@@ -11,13 +11,15 @@ import {
   loadRepositoriesActionCreator,
   setSearchTermActionCreator,
   loadSearchedRepositoriesActionCreator,
+  loadUserActionCreator,
 } from "../../store/repositories/repositoriesSlice";
 import { RepositoryStructure } from "../../types";
 import Loader from "../Loader/Loader";
 
 export default function App(): React.ReactElement {
   const [isLoading, setIsLoading] = useState(false);
-  const { getRepositories, getRepositoriesBySearchTerm } = useRepositories();
+  const { getRepositories, getRepositoriesBySearchTerm, getUser } =
+    useRepositories();
   const dispatch = useAppDispatch();
   const {
     user,
@@ -25,7 +27,17 @@ export default function App(): React.ReactElement {
     repositoriesBySearchTerm,
     searchTerm,
     searchMethod,
+    initialGithubUsername,
   } = useAppSelector((state) => state.repositoriesStore);
+
+  useEffect(() => {
+    (async () => {
+      const userData = await getUser(initialGithubUsername);
+      if (userData) {
+        dispatch(loadUserActionCreator(userData));
+      }
+    })();
+  }, [dispatch, getUser, initialGithubUsername]);
 
   useEffect(() => {
     (async () => {
@@ -71,7 +83,7 @@ export default function App(): React.ReactElement {
             ),
           );
       }
-    }, 300);
+    }, 350);
   }, [dispatch, getRepositoriesBySearchTerm, user, searchMethod]);
 
   return (
@@ -83,7 +95,7 @@ export default function App(): React.ReactElement {
           <UserDetails user={user} />
           <div className=" flex-1 pt-10 md:pl-20 md:pt-0">
             <SearchBar onSearchChange={onSearchChange} />
-            {isLoading && !repositoriesBySearchTerm.length && <Loader />}
+            {isLoading && !repositoriesBySearchTerm?.length && <Loader />}
             <RepositoriesList
               repositories={
                 searchTerm && repositoriesBySearchTerm
