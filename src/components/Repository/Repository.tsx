@@ -44,13 +44,13 @@ export default function Repository({
             <span className="inline-block">{language}</span>
           </div>
         )}
-        {stargazers_count && (
+        {typeof stargazers_count === "number" && (
           <div className="mr-4 flex items-center gap-1">
             <GoStar className="inline" />
             <span aria-label="stars count">{stargazers_count}</span>
           </div>
         )}
-        {forks_count && (
+        {typeof forks_count === "number" && (
           <div className="mr-4 flex items-center gap-1">
             <GoRepoForked className="inline" />
             <span aria-label="forks count">{forks_count}</span>
