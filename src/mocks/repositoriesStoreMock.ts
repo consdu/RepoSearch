@@ -1338,4 +1338,5 @@ export const repositoriesStoreMock: RepositoriesStoreStructure = {
   perPage: 10,
   totalPages: 2,
   searchTerm: "",
+  searchMethod: "name",
 };
