@@ -48,7 +48,9 @@ export default function SearchBar({
         />
       </div>
       <div>
+        <label htmlFor="search-method" aria-label="search method"></label>
         <select
+          id="search-method"
           name="search-method"
           onChange={handleSearchMethodChange}
           className="h-[42px] rounded-md border border-gray-400 px-4 py-2 text-base text-gray-400 outline-none outline-offset-0 transition-all focus:border-transparent focus:outline-primary-500 max-sm:w-full"
