@@ -4,10 +4,11 @@ import {
   RepositoriesStoreStructure,
   RepositoryStructure,
 } from "../../types";
-import { repositoriesStoreMock } from "../../mocks/repositoriesStoreMock";
 
-const initialRepositoriesState =
-  repositoriesStoreMock as RepositoriesStoreStructure;
+const initialRepositoriesState = {
+  initialGithubUsername: "consdu",
+  searchMethod: "name",
+} as RepositoriesStoreStructure;
 
 const repositoriesSlice = createSlice({
   name: "repositories",

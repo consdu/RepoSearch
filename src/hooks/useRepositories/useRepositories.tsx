@@ -62,23 +62,24 @@ export default function useRepositories() {
     [],
   );
 
-  const getUser = async (
-    username: string,
-  ): Promise<GithubUserStructure | undefined> => {
-    try {
-      const response = await fetch(`${apiUrl}/users/${username}`);
+  const getUser = useCallback(
+    async (username: string): Promise<GithubUserStructure | undefined> => {
+      try {
+        const response = await fetch(`${apiUrl}/users/${username}`);
 
-      if (!response.ok) {
-        throw new Error();
+        if (!response.ok) {
+          throw new Error();
+        }
+
+        const data = (await response.json()) as GithubUserStructure;
+
+        return data;
+      } catch {
+        toast.error("No user found user, try another!");
       }
-
-      const data = (await response.json()) as GithubUserStructure;
-
-      return data;
-    } catch {
-      toast.error("Error loading user");
-    }
-  };
+    },
+    [],
+  );
 
   return { getRepositories, getRepositoriesBySearchTerm, getUser };
 }

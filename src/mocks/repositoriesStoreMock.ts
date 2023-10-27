@@ -1,6 +1,7 @@
 import { RepositoriesStoreStructure } from "../types";
 
 export const repositoriesStoreMock: RepositoriesStoreStructure = {
+  initialGithubUsername: "",
   user: {
     login: "gaearon",
     id: 810438,
