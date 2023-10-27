@@ -11,14 +11,28 @@ interface RepositoryProps {
 export default function Repository({
   repository,
 }: RepositoryProps): React.ReactElement {
-  const { description, language, stargazers_count, forks_count, updated_at } =
-    repository;
+  const {
+    description,
+    language,
+    stargazers_count,
+    forks_count,
+    updated_at,
+    owner,
+    name,
+  } = repository;
 
   const languageColor = useMemo(() => getColorByLanguage(language), [language]);
 
   return (
     <article className="h-fit flex-1 py-6">
-      <h2 className="text-2xl">{repository.name}</h2>
+      <a
+        href={`https://github.com/${owner.login}/${name}`}
+        className="inline-block"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <h2 className="text-2xl hover:underline">{name}</h2>
+      </a>
       <p className="mt-2 text-gray-400">{description}</p>
       <div className="mt-4 flex flex-wrap gap-y-2 text-sm text-gray-400">
         {language && (

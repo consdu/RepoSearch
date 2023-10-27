@@ -44,9 +44,9 @@
 }
 
 html {
-  @apply bg-gradient-to-b from-white to-primary-100;
+  @apply bg-gradient-to-b from-white to-primary-100 bg-fixed;
 }
 
 body {
-  @apply min-h-[calc(100vh+148px)] overflow-y-scroll;
+  @apply min-h-[calc(100vh+500px)] overflow-y-scroll sm:min-h-[calc(100vh+148px)];
 }

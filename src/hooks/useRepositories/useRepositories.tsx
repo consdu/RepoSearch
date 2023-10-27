@@ -15,7 +15,7 @@ export default function useRepositories() {
           throw new Error();
         }
 
-        const data = await response.json();
+        const data = (await response.json()) as RepositoryStructure[];
 
         return data;
       } catch {
@@ -29,17 +29,30 @@ export default function useRepositories() {
     async (
       username: string,
       searchTerm: string,
+      searchMethod: string,
     ): Promise<RepositoryStructure[] | undefined> => {
       try {
-        const response = await fetch(
-          `${apiUrl}/search/repositories?q=${searchTerm}+user:${username}+fork:true`,
-        );
+        let response;
 
-        if (!response.ok) {
+        if (searchMethod === "name") {
+          response = await fetch(
+            `${apiUrl}/search/repositories?q=${searchTerm}+user:${username}+fork:true`,
+          );
+        }
+
+        if (searchMethod === "language") {
+          response = await fetch(
+            `${apiUrl}/search/repositories?q=+user:${username}+fork:true+language:${searchTerm}&per_page=100`,
+          );
+        }
+
+        if (!response?.ok) {
           throw new Error();
         }
 
-        const data = await response.json();
+        const data = (await response.json()) as {
+          items: RepositoryStructure[];
+        };
 
         return data.items;
       } catch {

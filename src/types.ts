@@ -7,6 +7,7 @@ export interface RepositoriesStoreStructure {
   perPage: number;
   totalPages: number;
   searchTerm: string;
+  searchMethod: string;
 }
 
 export interface GithubUserStructure {

@@ -6,6 +6,7 @@ import { server } from "../../mocks/server";
 import { errorHandlers } from "../../mocks/handlers";
 
 const searchedRepositories = repositoriesStoreMock.repositories.slice(0, 3);
+const searchMethod = repositoriesStoreMock.searchMethod;
 
 describe("Given a getRepositoriesBySearchTerm function", () => {
   const username = "testuser";
@@ -19,7 +20,11 @@ describe("Given a getRepositoriesBySearchTerm function", () => {
       const { result } = renderHook(() => useRepositories());
       const { getRepositoriesBySearchTerm } = result.current;
 
-      const response = await getRepositoriesBySearchTerm(username, searchTerm);
+      const response = await getRepositoriesBySearchTerm(
+        username,
+        searchTerm,
+        searchMethod,
+      );
 
       expect(response).toStrictEqual(expectedResponse);
     });
@@ -34,7 +39,11 @@ describe("Given a getRepositoriesBySearchTerm function", () => {
       const { result } = renderHook(() => useRepositories());
       const { getRepositoriesBySearchTerm } = result.current;
 
-      const response = await getRepositoriesBySearchTerm(username, searchTerm);
+      const response = await getRepositoriesBySearchTerm(
+        username,
+        searchTerm,
+        searchMethod,
+      );
 
       expect(response).toStrictEqual(expectedResponse);
     });
