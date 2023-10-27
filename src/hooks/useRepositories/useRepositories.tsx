@@ -62,7 +62,9 @@ export default function useRepositories() {
     [],
   );
 
-  const getUser = async (username: string) => {
+  const getUser = async (
+    username: string,
+  ): Promise<GithubUserStructure | undefined> => {
     try {
       const response = await fetch(`${apiUrl}/users/${username}`);
 
