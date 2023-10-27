@@ -21,7 +21,6 @@ export default function App(): React.ReactElement {
   const [isLoading, setIsLoading] = useState(false);
   const { getRepositories, getRepositoriesBySearchTerm, getUser } =
     useRepositories();
-
   const dispatch = useAppDispatch();
   const {
     user,
@@ -32,31 +31,10 @@ export default function App(): React.ReactElement {
     initialGithubUsername,
   } = useAppSelector((state) => state.repositoriesStore);
 
-  useEffect(() => {
-    (async () => {
-      const userData = await getUser(initialGithubUsername);
-      if (userData) {
-        dispatch(loadUserActionCreator(userData));
-      }
-    })();
-  }, [dispatch, getUser, initialGithubUsername]);
-
-  useEffect(() => {
-    (async () => {
-      if (user) {
-        setIsLoading(true);
-
-        const data = await getRepositories(user.login);
-
-        setIsLoading(false);
-
-        data &&
-          dispatch(
-            loadRepositoriesActionCreator(data as RepositoryStructure[]),
-          );
-      }
-    })();
-  }, [dispatch, getRepositories, user]);
+  const hasNoMatchingRepositories = useMemo(
+    () => searchTerm?.length > 0 && repositoriesBySearchTerm?.length === 0,
+    [repositoriesBySearchTerm, searchTerm],
+  );
 
   const onSearchChange = useMemo(() => {
     return _debounce(async (searchTerm: string) => {
@@ -70,28 +48,46 @@ export default function App(): React.ReactElement {
       if (user) {
         setIsLoading(true);
 
-        const data = await getRepositoriesBySearchTerm(
+        const repositories = (await getRepositoriesBySearchTerm(
           user.login,
           searchTerm,
           searchMethod,
-        );
+        )) as RepositoryStructure[];
 
         setIsLoading(false);
 
-        data &&
-          dispatch(
-            loadSearchedRepositoriesActionCreator(
-              data as RepositoryStructure[],
-            ),
-          );
+        if (repositories) {
+          dispatch(loadSearchedRepositoriesActionCreator(repositories));
+        }
       }
     }, 350);
   }, [dispatch, getRepositoriesBySearchTerm, user, searchMethod]);
 
-  const hasNoMatchingRepositories = useMemo(
-    () => searchTerm?.length > 0 && repositoriesBySearchTerm?.length === 0,
-    [repositoriesBySearchTerm, searchTerm],
-  );
+  useEffect(() => {
+    (async () => {
+      const userData = await getUser(initialGithubUsername);
+
+      if (userData) {
+        dispatch(loadUserActionCreator(userData));
+      }
+    })();
+  }, [dispatch, getUser, initialGithubUsername]);
+
+  useEffect(() => {
+    (async () => {
+      if (user) {
+        setIsLoading(true);
+
+        const repositories = (await getRepositories(
+          user.login,
+        )) as RepositoryStructure[];
+
+        setIsLoading(false);
+
+        dispatch(loadRepositoriesActionCreator(repositories));
+      }
+    })();
+  }, [dispatch, getRepositories, user]);
 
   return (
     <div className="custom-container min-h-screen">
