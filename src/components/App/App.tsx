@@ -15,11 +15,13 @@ import {
 } from "../../store/repositories/repositoriesSlice";
 import { RepositoryStructure } from "../../types";
 import Loader from "../Loader/Loader";
+import NoRepositoriesFound from "../NoRepositoriesFound/NoRepositoriesFound";
 
 export default function App(): React.ReactElement {
   const [isLoading, setIsLoading] = useState(false);
   const { getRepositories, getRepositoriesBySearchTerm, getUser } =
     useRepositories();
+
   const dispatch = useAppDispatch();
   const {
     user,
@@ -86,6 +88,11 @@ export default function App(): React.ReactElement {
     }, 350);
   }, [dispatch, getRepositoriesBySearchTerm, user, searchMethod]);
 
+  const hasNoMatchingRepositories = useMemo(
+    () => searchTerm?.length > 0 && repositoriesBySearchTerm?.length === 0,
+    [repositoriesBySearchTerm, searchTerm],
+  );
+
   return (
     <div className="custom-container min-h-screen">
       <Toaster richColors />
@@ -96,6 +103,7 @@ export default function App(): React.ReactElement {
           <div className=" flex-1 pt-10 md:pl-20 md:pt-0">
             <RepositoriesSearch onSearchChange={onSearchChange} />
             {isLoading && !repositoriesBySearchTerm?.length && <Loader />}
+            {hasNoMatchingRepositories && !isLoading && <NoRepositoriesFound />}
             <RepositoriesList
               repositories={
                 searchTerm && repositoriesBySearchTerm
