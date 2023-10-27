@@ -4,7 +4,7 @@ import _debounce from "debounce";
 import { useAppDispatch, useAppSelector } from "../../store";
 import Header from "../Header/Header";
 import RepositoriesList from "../RepositoriesList/RepositoriesList";
-import SearchBar from "../SearchBar/SearchBar";
+import RepositoriesSearch from "../RepositoriesSearch/RepositoriesSearch";
 import UserDetails from "../UserDetails/UserDetails";
 import useRepositories from "../../hooks/useRepositories/useRepositories";
 import {
@@ -94,7 +94,7 @@ export default function App(): React.ReactElement {
         <section className="flex flex-col md:flex-row">
           <UserDetails user={user} />
           <div className=" flex-1 pt-10 md:pl-20 md:pt-0">
-            <SearchBar onSearchChange={onSearchChange} />
+            <RepositoriesSearch onSearchChange={onSearchChange} />
             {isLoading && !repositoriesBySearchTerm?.length && <Loader />}
             <RepositoriesList
               repositories={
