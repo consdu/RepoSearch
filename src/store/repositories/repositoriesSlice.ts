@@ -30,6 +30,13 @@ const repositoriesSlice = createSlice({
       ...currentRepositoriesState,
       searchTerm: action.payload,
     }),
+    setSearchMethod: (
+      currentRepositoriesState: RepositoriesStoreStructure,
+      action: PayloadAction<string>,
+    ) => ({
+      ...currentRepositoriesState,
+      searchMethod: action.payload,
+    }),
   },
 });
 
@@ -37,6 +44,7 @@ export const {
   loadRepositories: loadRepositoriesActionCreator,
   loadSearchedRepositories: loadSearchedRepositoriesActionCreator,
   loadSearchTerm: loadSearchTermActionCreator,
+  setSearchMethod: setSearchMethodActionCreator,
 } = repositoriesSlice.actions;
 
 export const repositoriesReducer = repositoriesSlice.reducer;
