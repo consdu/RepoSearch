@@ -1,4 +1,5 @@
 export interface RepositoriesStoreStructure {
+  initialGithubUsername: string;
   user: GithubUserStructure;
   repositories: RepositoryStructure[];
   repositoriesBySearchTerm: RepositoryStructure[];
