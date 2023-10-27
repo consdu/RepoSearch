@@ -104,13 +104,15 @@ export default function App(): React.ReactElement {
             <RepositoriesSearch onSearchChange={onSearchChange} />
             {isLoading && !repositoriesBySearchTerm?.length && <Loader />}
             {hasNoMatchingRepositories && !isLoading && <NoRepositoriesFound />}
-            <RepositoriesList
-              repositories={
-                searchTerm && repositoriesBySearchTerm
-                  ? repositoriesBySearchTerm
-                  : repositories
-              }
-            />
+            {!isLoading && (
+              <RepositoriesList
+                repositories={
+                  searchTerm && repositoriesBySearchTerm
+                    ? repositoriesBySearchTerm
+                    : repositories
+                }
+              />
+            )}
           </div>
         </section>
       </main>
