@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { GoArrowRight, GoSearch } from "react-icons/go";
+import { GoArrowRight, GoSearch, GoHourglass } from "react-icons/go";
 
 interface UserSearchProps {
   onFormSubmit: (username: string) => void;
+  isLoading: boolean;
 }
 
 export default function UserSearch({
   onFormSubmit,
+  isLoading,
 }: UserSearchProps): React.ReactElement {
   const [username, setUsername] = useState("");
 
@@ -41,9 +43,10 @@ export default function UserSearch({
       </div>
       <button
         type="submit"
-        className="rounded-md border border-gray-400 bg-white px-4 py-2 outline-none outline-offset-0  transition-all hover:border-transparent hover:outline-primary-500 focus:border-transparent focus:outline-primary-500"
+        disabled={isLoading}
+        className="rounded-md border border-gray-400 bg-white px-4 py-2 outline-none outline-offset-0 transition-all hover:border-transparent hover:outline-primary-500 focus:border-transparent focus:outline-primary-500 disabled:cursor-not-allowed disabled:outline-none hover:disabled:border-gray-400"
       >
-        <GoArrowRight />
+        {isLoading ? <GoHourglass /> : <GoArrowRight />}
       </button>
     </form>
   );

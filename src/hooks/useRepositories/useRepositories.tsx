@@ -76,7 +76,7 @@ export default function useRepositories() {
 
       return data;
     } catch {
-      toast.error("Error loading user");
+      toast.error("No user found user, try another!");
     }
   };
 
