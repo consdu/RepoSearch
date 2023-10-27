@@ -1,13 +1,14 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import SearchBar from "./SearchBar";
+import { renderWithProviders } from "../../utils/testUtils";
 
 const onSearchChange = vi.fn();
 
 describe("Given a SearchBar component", () => {
   describe("When it is rendered", () => {
     test("Then it should display a text input", () => {
-      render(<SearchBar onSearchChange={onSearchChange} />);
+      renderWithProviders(<SearchBar onSearchChange={onSearchChange} />);
 
       const inputElement = screen.getByRole("search");
 
@@ -19,7 +20,7 @@ describe("Given a SearchBar component", () => {
     test("Then the input value should reflect 'react'", async () => {
       const typedText = "react";
 
-      render(<SearchBar onSearchChange={onSearchChange} />);
+      renderWithProviders(<SearchBar onSearchChange={onSearchChange} />);
 
       const inputElement = screen.getByRole("search");
 
