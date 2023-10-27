@@ -17,10 +17,15 @@ import Loader from "../Loader/Loader";
 
 export default function App(): React.ReactElement {
   const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useAppDispatch();
-  const { user, repositories, repositoriesBySearchTerm, searchTerm } =
-    useAppSelector((state) => state.repositoriesStore);
   const { getRepositories, getRepositoriesBySearchTerm } = useRepositories();
+  const dispatch = useAppDispatch();
+  const {
+    user,
+    repositories,
+    repositoriesBySearchTerm,
+    searchTerm,
+    searchMethod,
+  } = useAppSelector((state) => state.repositoriesStore);
 
   useEffect(() => {
     (async () => {
@@ -51,7 +56,11 @@ export default function App(): React.ReactElement {
       if (user) {
         setIsLoading(true);
 
-        const data = await getRepositoriesBySearchTerm(user.login, searchTerm);
+        const data = await getRepositoriesBySearchTerm(
+          user.login,
+          searchTerm,
+          searchMethod,
+        );
 
         setIsLoading(false);
 
@@ -63,7 +72,7 @@ export default function App(): React.ReactElement {
           );
       }
     }, 250);
-  }, [dispatch, getRepositoriesBySearchTerm, user]);
+  }, [dispatch, getRepositoriesBySearchTerm, user, searchMethod]);
 
   return (
     <div className="custom-container min-h-screen">
