@@ -15,6 +15,7 @@ import {
 } from "../../store/repositories/repositoriesSlice";
 import { RepositoryStructure } from "../../types";
 import Loader from "../Loader/Loader";
+import NoRepositoriesFound from "../NoRepositoriesFound/NoRepositoriesFound";
 
 export default function App(): React.ReactElement {
   const [isLoading, setIsLoading] = useState(false);
@@ -30,31 +31,10 @@ export default function App(): React.ReactElement {
     initialGithubUsername,
   } = useAppSelector((state) => state.repositoriesStore);
 
-  useEffect(() => {
-    (async () => {
-      const userData = await getUser(initialGithubUsername);
-      if (userData) {
-        dispatch(loadUserActionCreator(userData));
-      }
-    })();
-  }, [dispatch, getUser, initialGithubUsername]);
-
-  useEffect(() => {
-    (async () => {
-      if (user) {
-        setIsLoading(true);
-
-        const data = await getRepositories(user.login);
-
-        setIsLoading(false);
-
-        data &&
-          dispatch(
-            loadRepositoriesActionCreator(data as RepositoryStructure[]),
-          );
-      }
-    })();
-  }, [dispatch, getRepositories, user]);
+  const hasNoMatchingRepositories = useMemo(
+    () => searchTerm?.length > 0 && repositoriesBySearchTerm?.length === 0,
+    [repositoriesBySearchTerm, searchTerm],
+  );
 
   const onSearchChange = useMemo(() => {
     return _debounce(async (searchTerm: string) => {
@@ -68,23 +48,46 @@ export default function App(): React.ReactElement {
       if (user) {
         setIsLoading(true);
 
-        const data = await getRepositoriesBySearchTerm(
+        const repositories = (await getRepositoriesBySearchTerm(
           user.login,
           searchTerm,
           searchMethod,
-        );
+        )) as RepositoryStructure[];
 
         setIsLoading(false);
 
-        data &&
-          dispatch(
-            loadSearchedRepositoriesActionCreator(
-              data as RepositoryStructure[],
-            ),
-          );
+        if (repositories) {
+          dispatch(loadSearchedRepositoriesActionCreator(repositories));
+        }
       }
     }, 350);
   }, [dispatch, getRepositoriesBySearchTerm, user, searchMethod]);
+
+  useEffect(() => {
+    (async () => {
+      const userData = await getUser(initialGithubUsername);
+
+      if (userData) {
+        dispatch(loadUserActionCreator(userData));
+      }
+    })();
+  }, [dispatch, getUser, initialGithubUsername]);
+
+  useEffect(() => {
+    (async () => {
+      if (user) {
+        setIsLoading(true);
+
+        const repositories = (await getRepositories(
+          user.login,
+        )) as RepositoryStructure[];
+
+        setIsLoading(false);
+
+        dispatch(loadRepositoriesActionCreator(repositories));
+      }
+    })();
+  }, [dispatch, getRepositories, user]);
 
   return (
     <div className="custom-container min-h-screen">
@@ -96,13 +99,16 @@ export default function App(): React.ReactElement {
           <div className=" flex-1 pt-10 md:pl-20 md:pt-0">
             <RepositoriesSearch onSearchChange={onSearchChange} />
             {isLoading && !repositoriesBySearchTerm?.length && <Loader />}
-            <RepositoriesList
-              repositories={
-                searchTerm && repositoriesBySearchTerm
-                  ? repositoriesBySearchTerm
-                  : repositories
-              }
-            />
+            {hasNoMatchingRepositories && !isLoading && <NoRepositoriesFound />}
+            {!isLoading && (
+              <RepositoriesList
+                repositories={
+                  searchTerm && repositoriesBySearchTerm
+                    ? repositoriesBySearchTerm
+                    : repositories
+                }
+              />
+            )}
           </div>
         </section>
       </main>
