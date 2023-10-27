@@ -1,5 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { RepositoriesStoreStructure, RepositoryStructure } from "../../types";
+import {
+  GithubUserStructure,
+  RepositoriesStoreStructure,
+  RepositoryStructure,
+} from "../../types";
 import { repositoriesStoreMock } from "../../mocks/repositoriesStoreMock";
 
 const initialRepositoriesState =
@@ -23,7 +27,14 @@ const repositoriesSlice = createSlice({
       ...currentRepositoriesState,
       repositoriesBySearchTerm: action.payload,
     }),
-    loadSearchTerm: (
+    loadUser: (
+      currentRepositoriesState: RepositoriesStoreStructure,
+      action: PayloadAction<GithubUserStructure>,
+    ) => ({
+      ...currentRepositoriesState,
+      user: action.payload,
+    }),
+    setSearchTerm: (
       currentRepositoriesState: RepositoriesStoreStructure,
       action: PayloadAction<string>,
     ) => ({
@@ -43,7 +54,8 @@ const repositoriesSlice = createSlice({
 export const {
   loadRepositories: loadRepositoriesActionCreator,
   loadSearchedRepositories: loadSearchedRepositoriesActionCreator,
-  loadSearchTerm: loadSearchTermActionCreator,
+  loadUser: loadUserActionCreator,
+  setSearchTerm: setSearchTermActionCreator,
   setSearchMethod: setSearchMethodActionCreator,
 } = repositoriesSlice.actions;
 
