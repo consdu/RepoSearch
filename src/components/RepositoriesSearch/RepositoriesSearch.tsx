@@ -3,13 +3,13 @@ import { GoSearch } from "react-icons/go";
 import { useAppDispatch } from "../../store";
 import { setSearchMethodActionCreator } from "../../store/repositories/repositoriesSlice";
 
-interface SearchBarProps {
+interface RepositoriesSearchProps {
   onSearchChange: (searchTerm: string) => void;
 }
 
-export default function SearchBar({
+export default function RepositoriesSearchProps({
   onSearchChange,
-}: SearchBarProps): React.ReactElement {
+}: RepositoriesSearchProps): React.ReactElement {
   const [search, setSearch] = useState("");
   const dispatch = useAppDispatch();
 
