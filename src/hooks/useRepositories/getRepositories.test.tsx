@@ -4,6 +4,8 @@ import { repositoriesStoreMock } from "../../mocks/repositoriesStoreMock";
 import { server } from "../../mocks/server";
 import { errorHandlers } from "../../mocks/handlers";
 
+const currentPage = 1;
+
 describe("Given a getRepositories function", () => {
   describe("When called with an existing github user 'testuser'", () => {
     test("Then it should return an array of repositories", async () => {
@@ -13,7 +15,7 @@ describe("Given a getRepositories function", () => {
       const { result } = renderHook(() => useRepositories());
       const { getRepositories } = result.current;
 
-      const response = await getRepositories(username);
+      const response = await getRepositories(username, currentPage);
 
       expect(response).toStrictEqual(expectedResponse);
     });
@@ -29,7 +31,7 @@ describe("Given a getRepositories function", () => {
       const { result } = renderHook(() => useRepositories());
       const { getRepositories } = result.current;
 
-      const response = await getRepositories(username);
+      const response = await getRepositories(username, currentPage);
 
       expect(response).toStrictEqual(expectedResponse);
     });
