@@ -5,9 +5,12 @@ import {
   loadSearchedRepositoriesActionCreator,
   loadUserActionCreator,
   repositoriesReducer,
+  setNextPageActionCreator,
   setSearchMethodActionCreator,
   setSearchTermActionCreator,
   setTotalPagesActionCreator,
+  setPreviousPageActionCreator,
+  resetCurrentPageActionCreator,
 } from "./repositoriesSlice";
 
 const repositoriesListMock = repositoriesStoreMock.repositories;
@@ -115,6 +118,75 @@ describe("Given a repositoriesReducer", () => {
       const newRepositoriesState = repositoriesReducer(
         currentRepositoriesState,
         setTotalPagesActionCreator(totalUserRepositories),
+      );
+
+      expect(newRepositoriesState).toStrictEqual(expectedRepositoriesState);
+    });
+  });
+
+  describe("When called with a currentRepositoriesState with currentPage set to 1 and a setNextPageAction", () => {
+    test("Then it should return a new state with the currentPage property set to 2", () => {
+      const currentPage = 1;
+      const expectedCurrentPage = currentPage + 1;
+
+      const currentRepositoriesState = {
+        currentPage,
+        totalPages: 2,
+      } as RepositoriesStoreStructure;
+      const expectedRepositoriesState = {
+        ...currentRepositoriesState,
+        currentPage: expectedCurrentPage,
+      } as RepositoriesStoreStructure;
+
+      const newRepositoriesState = repositoriesReducer(
+        currentRepositoriesState,
+        setNextPageActionCreator(),
+      );
+
+      expect(newRepositoriesState).toStrictEqual(expectedRepositoriesState);
+    });
+  });
+
+  describe("When called with a currentRepositoriesState with currentPage set to 2 and a setPreviousPageAction", () => {
+    test("Then it should return a new state with the currentPage property set to 1", () => {
+      const currentPage = 2;
+      const expectedCurrentPage = currentPage - 1;
+
+      const currentRepositoriesState = {
+        currentPage,
+        totalPages: 2,
+      } as RepositoriesStoreStructure;
+      const expectedRepositoriesState = {
+        ...currentRepositoriesState,
+        currentPage: expectedCurrentPage,
+      } as RepositoriesStoreStructure;
+
+      const newRepositoriesState = repositoriesReducer(
+        currentRepositoriesState,
+        setPreviousPageActionCreator(),
+      );
+
+      expect(newRepositoriesState).toStrictEqual(expectedRepositoriesState);
+    });
+  });
+
+  describe("When called with a currentRepositoriesState with currentPage set to 5 and a restCurrentPageAction", () => {
+    test("Then it should return a new state with the currentPage property set to 1", () => {
+      const currentPage = 5;
+      const expectedCurrentPage = 1;
+
+      const currentRepositoriesState = {
+        currentPage,
+        totalPages: 5,
+      } as RepositoriesStoreStructure;
+      const expectedRepositoriesState = {
+        ...currentRepositoriesState,
+        currentPage: expectedCurrentPage,
+      } as RepositoriesStoreStructure;
+
+      const newRepositoriesState = repositoriesReducer(
+        currentRepositoriesState,
+        resetCurrentPageActionCreator(),
       );
 
       expect(newRepositoriesState).toStrictEqual(expectedRepositoriesState);
