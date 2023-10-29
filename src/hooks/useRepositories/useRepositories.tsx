@@ -5,10 +5,13 @@ import { apiUrl } from "../../utils/constants";
 
 export default function useRepositories() {
   const getRepositories = useCallback(
-    async (username: string): Promise<RepositoryStructure[] | undefined> => {
+    async (
+      username: string,
+      page: number,
+    ): Promise<RepositoryStructure[] | undefined> => {
       try {
         const response = await fetch(
-          `${apiUrl}/users/${username}/repos?per_page=10`,
+          `${apiUrl}/users/${username}/repos?per_page=10&page=${page}`,
         );
 
         if (!response.ok) {
