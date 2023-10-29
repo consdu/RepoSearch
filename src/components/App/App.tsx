@@ -17,6 +17,7 @@ import {
 import { RepositoryStructure } from "../../types";
 import Loader from "../Loader/Loader";
 import NoRepositoriesFound from "../NoRepositoriesFound/NoRepositoriesFound";
+import PaginationButton from "../PaginationButton/PaginationButton";
 
 export default function App(): React.ReactElement {
   const [isLoading, setIsLoading] = useState(false);
@@ -113,6 +114,7 @@ export default function App(): React.ReactElement {
                 }
               />
             )}
+            <PaginationButton name="Next" onButtonClick={() => {}} />
           </div>
         </section>
       </main>
