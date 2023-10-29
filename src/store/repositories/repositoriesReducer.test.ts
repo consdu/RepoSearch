@@ -5,7 +5,9 @@ import {
   loadSearchedRepositoriesActionCreator,
   loadUserActionCreator,
   repositoriesReducer,
+  setSearchMethodActionCreator,
   setSearchTermActionCreator,
+  setTotalPagesActionCreator,
 } from "./repositoriesSlice";
 
 const repositoriesListMock = repositoriesStoreMock.repositories;
@@ -71,6 +73,48 @@ describe("Given a repositoriesReducer", () => {
       const newRepositoriesState = repositoriesReducer(
         currentRepositoriesState,
         setSearchTermActionCreator(searchTerm),
+      );
+
+      expect(newRepositoriesState).toStrictEqual(expectedRepositoriesState);
+    });
+  });
+
+  describe("When called with a currentRepositoriesState and a setSearchMethodAction with 'language' payload", () => {
+    test("Then it should return a new state with the 'language' as searchMethod property", () => {
+      const searchMethod = "language";
+      const currentRepositoriesState = {} as RepositoriesStoreStructure;
+      const expectedRepositoriesState = {
+        searchMethod: searchMethod,
+      } as RepositoriesStoreStructure;
+
+      const newRepositoriesState = repositoriesReducer(
+        currentRepositoriesState,
+        setSearchMethodActionCreator(searchMethod),
+      );
+
+      expect(newRepositoriesState).toStrictEqual(expectedRepositoriesState);
+    });
+  });
+
+  describe("When called with a currentRepositoriesState and a setTotalPagesAction with '23' payload", () => {
+    test("Then it should return a new state with the '3' as totalPages property", () => {
+      const totalUserRepositories = 23;
+      const repositoriesPerPage = 10;
+      const expectedTotalPages = Math.ceil(
+        totalUserRepositories / repositoriesPerPage,
+      );
+
+      const currentRepositoriesState = {
+        perPage: repositoriesPerPage,
+      } as RepositoriesStoreStructure;
+      const expectedRepositoriesState = {
+        ...currentRepositoriesState,
+        totalPages: expectedTotalPages,
+      } as RepositoriesStoreStructure;
+
+      const newRepositoriesState = repositoriesReducer(
+        currentRepositoriesState,
+        setTotalPagesActionCreator(totalUserRepositories),
       );
 
       expect(newRepositoriesState).toStrictEqual(expectedRepositoriesState);
