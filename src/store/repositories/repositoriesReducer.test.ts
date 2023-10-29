@@ -3,10 +3,13 @@ import { RepositoriesStoreStructure } from "../../types";
 import {
   loadRepositoriesActionCreator,
   loadSearchedRepositoriesActionCreator,
+  loadUserActionCreator,
   repositoriesReducer,
+  setSearchTermActionCreator,
 } from "./repositoriesSlice";
 
 const repositoriesListMock = repositoriesStoreMock.repositories;
+const userMock = repositoriesStoreMock.user;
 
 describe("Given a repositoriesReducer", () => {
   describe("When called with a currentRepositoriesState and a loadRepositoriesAction with a list of repos as payload", () => {
@@ -35,6 +38,39 @@ describe("Given a repositoriesReducer", () => {
       const newRepositoriesState = repositoriesReducer(
         currentRepositoriesState,
         loadSearchedRepositoriesActionCreator(repositoriesListMock),
+      );
+
+      expect(newRepositoriesState).toStrictEqual(expectedRepositoriesState);
+    });
+  });
+
+  describe("When called with a currentRepositoriesState and a loadUserAction with a user as payload", () => {
+    test("Then it should return a new state with the loaded user", () => {
+      const currentRepositoriesState = {} as RepositoriesStoreStructure;
+      const expectedRepositoriesState = {
+        user: userMock,
+      } as RepositoriesStoreStructure;
+
+      const newRepositoriesState = repositoriesReducer(
+        currentRepositoriesState,
+        loadUserActionCreator(userMock),
+      );
+
+      expect(newRepositoriesState).toStrictEqual(expectedRepositoriesState);
+    });
+  });
+
+  describe("When called with a currentRepositoriesState and a setSearchTermAction with 'test' payload", () => {
+    test("Then it should return a new state with the 'test' as searchTerm property", () => {
+      const searchTerm = "test";
+      const currentRepositoriesState = {} as RepositoriesStoreStructure;
+      const expectedRepositoriesState = {
+        searchTerm: searchTerm,
+      } as RepositoriesStoreStructure;
+
+      const newRepositoriesState = repositoriesReducer(
+        currentRepositoriesState,
+        setSearchTermActionCreator(searchTerm),
       );
 
       expect(newRepositoriesState).toStrictEqual(expectedRepositoriesState);
