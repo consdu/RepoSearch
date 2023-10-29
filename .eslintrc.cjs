@@ -23,4 +23,9 @@ module.exports = {
     ],
     "no-console": "error",
   },
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
 };
