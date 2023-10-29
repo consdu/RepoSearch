@@ -154,3 +154,8 @@ export interface RepositoryOwnerStructure {
   type: string;
   site_admin: boolean;
 }
+
+export interface UiStoreStructure {
+  isUserLoading: boolean;
+  isRepositoriesLoading: boolean;
+}
