@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { Toaster } from "sonner";
 import _debounce from "debounce";
 import { useAppDispatch, useAppSelector } from "../../store";
@@ -18,9 +18,9 @@ import { RepositoryStructure } from "../../types";
 import Loader from "../Loader/Loader";
 import NoRepositoriesFound from "../NoRepositoriesFound/NoRepositoriesFound";
 import Pagination from "../Pagination/Pagination";
+import { setIsRepositoriesLoadingActionCreator } from "../../store/ui/uiSlice";
 
 export default function App(): React.ReactElement {
-  const [isLoading, setIsLoading] = useState(false);
   const { getRepositories, getRepositoriesBySearchTerm, getUser } =
     useRepositories();
   const dispatch = useAppDispatch();
@@ -33,6 +33,7 @@ export default function App(): React.ReactElement {
     initialGithubUsername,
     currentPage,
   } = useAppSelector((state) => state.repositoriesStore);
+  const { isRepositoriesLoading } = useAppSelector((state) => state.uiStore);
 
   const hasNoMatchingRepositories = useMemo(
     () => searchTerm?.length > 0 && repositoriesBySearchTerm?.length === 0,
@@ -49,7 +50,7 @@ export default function App(): React.ReactElement {
       }
 
       if (user) {
-        setIsLoading(true);
+        dispatch(setIsRepositoriesLoadingActionCreator(true));
 
         const repositories = (await getRepositoriesBySearchTerm(
           user.login,
@@ -57,7 +58,7 @@ export default function App(): React.ReactElement {
           searchMethod,
         )) as RepositoryStructure[];
 
-        setIsLoading(false);
+        dispatch(setIsRepositoriesLoadingActionCreator(false));
 
         if (repositories) {
           dispatch(loadSearchedRepositoriesActionCreator(repositories));
@@ -80,14 +81,14 @@ export default function App(): React.ReactElement {
   useEffect(() => {
     (async () => {
       if (user) {
-        setIsLoading(true);
+        dispatch(setIsRepositoriesLoadingActionCreator(true));
 
         const repositories = (await getRepositories(
           user.login,
           currentPage,
         )) as RepositoryStructure[];
 
-        setIsLoading(false);
+        dispatch(setIsRepositoriesLoadingActionCreator(false));
 
         dispatch(loadRepositoriesActionCreator(repositories));
       }
@@ -103,9 +104,13 @@ export default function App(): React.ReactElement {
           <UserDetails user={user} />
           <div className="flex-1 pb-20 pt-10 md:pl-20 md:pt-0">
             <RepositoriesSearch onSearchChange={onSearchChange} />
-            {isLoading && !repositoriesBySearchTerm?.length && <Loader />}
-            {hasNoMatchingRepositories && !isLoading && <NoRepositoriesFound />}
-            {!isLoading && (
+            {isRepositoriesLoading && !repositoriesBySearchTerm?.length && (
+              <Loader />
+            )}
+            {hasNoMatchingRepositories && !isRepositoriesLoading && (
+              <NoRepositoriesFound />
+            )}
+            {!isRepositoriesLoading && (
               <RepositoriesList
                 repositories={
                   searchTerm && repositoriesBySearchTerm
@@ -114,7 +119,7 @@ export default function App(): React.ReactElement {
                 }
               />
             )}
-            <Pagination isLoading={isLoading} />
+            <Pagination isLoading={isRepositoriesLoading} />
           </div>
         </section>
       </main>
