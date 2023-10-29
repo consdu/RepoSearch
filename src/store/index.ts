@@ -3,9 +3,11 @@ import { combineReducers } from "@reduxjs/toolkit";
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { repositoriesReducer } from "./repositories/repositoriesSlice";
+import { uiReducer } from "./ui/uiSlice";
 
 const rootReducer = combineReducers({
   repositoriesStore: repositoriesReducer,
+  uiStore: uiReducer,
 });
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
