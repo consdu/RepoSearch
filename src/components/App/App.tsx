@@ -17,7 +17,7 @@ import {
 import { RepositoryStructure } from "../../types";
 import Loader from "../Loader/Loader";
 import NoRepositoriesFound from "../NoRepositoriesFound/NoRepositoriesFound";
-import PaginationButton from "../PaginationButton/PaginationButton";
+import Pagination from "../Pagination/Pagination";
 
 export default function App(): React.ReactElement {
   const [isLoading, setIsLoading] = useState(false);
@@ -101,7 +101,7 @@ export default function App(): React.ReactElement {
       <main>
         <section className="flex flex-col md:flex-row">
           <UserDetails user={user} />
-          <div className=" flex-1 pt-10 md:pl-20 md:pt-0">
+          <div className="flex-1 pb-20 pt-10 md:pl-20 md:pt-0">
             <RepositoriesSearch onSearchChange={onSearchChange} />
             {isLoading && !repositoriesBySearchTerm?.length && <Loader />}
             {hasNoMatchingRepositories && !isLoading && <NoRepositoriesFound />}
@@ -114,7 +114,7 @@ export default function App(): React.ReactElement {
                 }
               />
             )}
-            <PaginationButton name="Next" onButtonClick={() => {}} />
+            <Pagination isLoading={isLoading} />
           </div>
         </section>
       </main>

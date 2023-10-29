@@ -8,6 +8,7 @@ import {
 const initialRepositoriesState = {
   initialGithubUsername: "consdu",
   searchMethod: "name",
+  searchTerm: "",
   perPage: 10,
   currentPage: 1,
 } as RepositoriesStoreStructure;
