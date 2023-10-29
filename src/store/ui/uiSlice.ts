@@ -31,3 +31,5 @@ export const {
   setIsUserLoading: setIsUserLoadingActionCreator,
   setIsRepositoriesLoading: setIsRepositoriesLoadingActionCreator,
 } = uiSlice.actions;
+
+export const uiReducer = uiSlice.reducer;
