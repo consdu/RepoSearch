@@ -3,6 +3,7 @@ import useRepositories from "../../hooks/useRepositories/useRepositories";
 import { useAppDispatch } from "../../store";
 import {
   loadUserActionCreator,
+  resetCurrentPageActionCreator,
   setTotalPagesActionCreator,
 } from "../../store/repositories/repositoriesSlice";
 import { GithubUserStructure } from "../../types";
@@ -23,6 +24,7 @@ export default function Header(): React.ReactElement {
     if (user) {
       dispatch(loadUserActionCreator(user));
       dispatch(setTotalPagesActionCreator(user.public_repos));
+      dispatch(resetCurrentPageActionCreator());
     }
   };
 
