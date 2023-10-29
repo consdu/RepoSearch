@@ -1,7 +1,11 @@
 import { useState } from "react";
 import useRepositories from "../../hooks/useRepositories/useRepositories";
 import { useAppDispatch } from "../../store";
-import { loadUserActionCreator } from "../../store/repositories/repositoriesSlice";
+import {
+  loadUserActionCreator,
+  resetCurrentPageActionCreator,
+  setTotalPagesActionCreator,
+} from "../../store/repositories/repositoriesSlice";
 import { GithubUserStructure } from "../../types";
 import BrandLogo from "../BrandLogo/BrandLogo";
 import UserSearch from "../UserSearch/UserSearch";
@@ -19,6 +23,8 @@ export default function Header(): React.ReactElement {
     setIsLoading(false);
     if (user) {
       dispatch(loadUserActionCreator(user));
+      dispatch(setTotalPagesActionCreator(user.public_repos));
+      dispatch(resetCurrentPageActionCreator());
     }
   };
 

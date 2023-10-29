@@ -12,10 +12,12 @@ import {
   setSearchTermActionCreator,
   loadSearchedRepositoriesActionCreator,
   loadUserActionCreator,
+  setTotalPagesActionCreator,
 } from "../../store/repositories/repositoriesSlice";
 import { RepositoryStructure } from "../../types";
 import Loader from "../Loader/Loader";
 import NoRepositoriesFound from "../NoRepositoriesFound/NoRepositoriesFound";
+import Pagination from "../Pagination/Pagination";
 
 export default function App(): React.ReactElement {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,6 +31,7 @@ export default function App(): React.ReactElement {
     searchTerm,
     searchMethod,
     initialGithubUsername,
+    currentPage,
   } = useAppSelector((state) => state.repositoriesStore);
 
   const hasNoMatchingRepositories = useMemo(
@@ -69,6 +72,7 @@ export default function App(): React.ReactElement {
 
       if (userData) {
         dispatch(loadUserActionCreator(userData));
+        dispatch(setTotalPagesActionCreator(userData.public_repos));
       }
     })();
   }, [dispatch, getUser, initialGithubUsername]);
@@ -80,6 +84,7 @@ export default function App(): React.ReactElement {
 
         const repositories = (await getRepositories(
           user.login,
+          currentPage,
         )) as RepositoryStructure[];
 
         setIsLoading(false);
@@ -87,7 +92,7 @@ export default function App(): React.ReactElement {
         dispatch(loadRepositoriesActionCreator(repositories));
       }
     })();
-  }, [dispatch, getRepositories, user]);
+  }, [dispatch, getRepositories, user, currentPage]);
 
   return (
     <div className="custom-container min-h-screen">
@@ -96,7 +101,7 @@ export default function App(): React.ReactElement {
       <main>
         <section className="flex flex-col md:flex-row">
           <UserDetails user={user} />
-          <div className=" flex-1 pt-10 md:pl-20 md:pt-0">
+          <div className="flex-1 pb-20 pt-10 md:pl-20 md:pt-0">
             <RepositoriesSearch onSearchChange={onSearchChange} />
             {isLoading && !repositoriesBySearchTerm?.length && <Loader />}
             {hasNoMatchingRepositories && !isLoading && <NoRepositoriesFound />}
@@ -109,6 +114,7 @@ export default function App(): React.ReactElement {
                 }
               />
             )}
+            <Pagination isLoading={isLoading} />
           </div>
         </section>
       </main>
