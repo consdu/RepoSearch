@@ -8,6 +8,8 @@ import {
 const initialRepositoriesState = {
   initialGithubUsername: "consdu",
   searchMethod: "name",
+  perPage: 10,
+  currentPage: 1,
 } as RepositoriesStoreStructure;
 
 const repositoriesSlice = createSlice({
@@ -49,6 +51,13 @@ const repositoriesSlice = createSlice({
       ...currentRepositoriesState,
       searchMethod: action.payload,
     }),
+    setTotalPages: (
+      currentRepositoriesState: RepositoriesStoreStructure,
+      action: PayloadAction<number>,
+    ) => ({
+      ...currentRepositoriesState,
+      totalPages: Math.ceil(action.payload / currentRepositoriesState.perPage),
+    }),
   },
 });
 
@@ -58,6 +67,7 @@ export const {
   loadUser: loadUserActionCreator,
   setSearchTerm: setSearchTermActionCreator,
   setSearchMethod: setSearchMethodActionCreator,
+  setTotalPages: setTotalPagesActionCreator,
 } = repositoriesSlice.actions;
 
 export const repositoriesReducer = repositoriesSlice.reducer;
