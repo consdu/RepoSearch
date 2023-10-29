@@ -28,7 +28,10 @@ export default function RepositoriesSearchProps({
   }, [search, onSearchChange]);
 
   return (
-    <form className="flex gap-2 max-sm:flex-col">
+    <form
+      className="flex gap-2 max-sm:flex-col"
+      onSubmit={(event) => event.preventDefault()}
+    >
       <div className="relative flex flex-1 items-center gap-2">
         <label
           htmlFor="searchbar"
@@ -53,7 +56,7 @@ export default function RepositoriesSearchProps({
           id="search-method"
           name="search-method"
           onChange={handleSearchMethodChange}
-          className="h-[42px] rounded-md border border-gray-400 px-4 py-2 text-base text-gray-400 outline-none outline-offset-0 transition-all focus:border-transparent focus:outline-primary-500 max-sm:w-full"
+          className="h-[42px] cursor-pointer rounded-md border border-gray-400 px-4 py-2 text-base text-gray-400 outline-none outline-offset-0 transition-all hover:border-transparent hover:outline-primary-500 focus:border-transparent focus:outline-primary-500 max-sm:w-full"
         >
           <option value="name">By name</option>
           <option value="language">By language</option>

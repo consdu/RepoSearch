@@ -12,6 +12,7 @@ import {
   setSearchTermActionCreator,
   loadSearchedRepositoriesActionCreator,
   loadUserActionCreator,
+  setTotalPagesActionCreator,
 } from "../../store/repositories/repositoriesSlice";
 import { RepositoryStructure } from "../../types";
 import Loader from "../Loader/Loader";
@@ -29,6 +30,7 @@ export default function App(): React.ReactElement {
     searchTerm,
     searchMethod,
     initialGithubUsername,
+    currentPage,
   } = useAppSelector((state) => state.repositoriesStore);
 
   const hasNoMatchingRepositories = useMemo(
@@ -69,6 +71,7 @@ export default function App(): React.ReactElement {
 
       if (userData) {
         dispatch(loadUserActionCreator(userData));
+        dispatch(setTotalPagesActionCreator(userData.public_repos));
       }
     })();
   }, [dispatch, getUser, initialGithubUsername]);
@@ -80,6 +83,7 @@ export default function App(): React.ReactElement {
 
         const repositories = (await getRepositories(
           user.login,
+          currentPage,
         )) as RepositoryStructure[];
 
         setIsLoading(false);
@@ -87,7 +91,7 @@ export default function App(): React.ReactElement {
         dispatch(loadRepositoriesActionCreator(repositories));
       }
     })();
-  }, [dispatch, getRepositories, user]);
+  }, [dispatch, getRepositories, user, currentPage]);
 
   return (
     <div className="custom-container min-h-screen">
